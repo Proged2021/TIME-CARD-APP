@@ -1,0 +1,36 @@
+/* ページ全体の基本設定 */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden; /* スクロールバーを非表示に */
+    background-color: #000; /* カメラが起動するまでの背景色 */
+}
+
+/* カメラ映像のコンテナを全画面にする */
+#qr-reader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* 映像自体をコンテナいっぱいに広げる */
+#qr-reader video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* スキャン結果の表示エリアを画面下部中央に配置 */
+#scan-result {
+    position: fixed;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    min-width: 300px;
+    text-align: center;
+}

@@ -8,11 +8,14 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='scanner_style.css') }}">
 </head>
 <body>
-    <div id="qr-reader"></div>
+    <div id="qr-reader" style="display: none;"></div> <div id="start-screen" class="d-flex flex-column justify-content-center align-items-center h-100">
+        <h1 class="text-white mb-4">出席スキャン</h1>
+        <button id="start-scan-btn" class="btn btn-primary btn-lg">スキャンを開始する</button>
+    </div>
 
     <div id="scan-result"></div>
 
-    <audio id="scan-sound" src="https://soundeffect-lab.info/sound/button/mp3/decision-1.mp3" preload="auto"></audio>
+    <audio id="scan-sound" src="{{ url_for('static', filename='sounds/pixta_43147624.mp3') }}" preload="auto"></audio>
 
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <script src="{{ url_for('static', filename='scanner.js') }}"></script>
