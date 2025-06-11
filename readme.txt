@@ -1,3 +1,6 @@
+//仮想環境を有効にする
+source venv/bin/activate
+
 //サーバーの起動
 flask --app app --debug run
 
@@ -6,3 +9,5 @@ flask --app app --debug run
 
 # 管理画ページ
 （http://127.0.0.1:5000/admin）
+
+timecard-db-postgres.cluster-chws42kecqe9.ap-southeast-2.rds.amazonaws.com

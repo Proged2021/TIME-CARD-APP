@@ -1,0 +1,16 @@
+# 仮想環境フォルダ
+venv/
+
+# Pythonのキャッシュファイル
+__pycache__/
+*.pyc
+
+# OSが自動生成するファイル
+.DS_Store
+
+# VS Codeの設定フォルダ
+.vscode/
+
+# その他、環境によって生成されるファイル
+.env
+*.log
