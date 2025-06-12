@@ -2,14 +2,13 @@
 source venv/bin/activate
 
 //サーバーの起動
-flask --app app --debug run
-
+flask --app app --debug run --host=0.0.0.0 --port=5001
 //# QRコード生成ページ 
-(http://127.0.0.1:5000/qr) 
+(http://127.0.0.1:5001/qr) 
 
 # 管理画ページ
-（http://127.0.0.1:5000/admin）
+（http://127.0.0.1:5001/admin）
 
 #スキャナーのページ
-（http://127.0.0.1:5000/scan）
+（http://127.0.0.1:5001/scan）
 timecard-db-postgres.cluster-chws42kecqe9.ap-southeast-2.rds.amazonaws.com
