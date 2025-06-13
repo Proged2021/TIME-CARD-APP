@@ -12,4 +12,3 @@ python3 app.py
 
 #スキャナーのページ
 （http://127.0.0.1:5001/scan）
-timecard-db-postgres.cluster-chws42kecqe9.ap-southeast-2.rds.amazonaws.com
