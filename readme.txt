@@ -3,6 +3,7 @@ source venv/bin/activate
 
 //サーバーの起動
 flask --app app --debug run --host=0.0.0.0 --port=5001
+
 //# QRコード生成ページ 
 (http://127.0.0.1:5001/qr) 
 
