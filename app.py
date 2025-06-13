@@ -1,13 +1,10 @@
 import psycopg2
-import psycopg2.extras # 辞書形式でデータを扱うために必要
+import psycopg2.extras
 from flask import Flask, render_template, jsonify, request
 from datetime import datetime
 
-# Flaskアプリケーションの初期化
 app = Flask(__name__)
-# jsonifyが日本語を正しく扱うための設定
 app.config['JSON_AS_ASCII'] = False
-
 
 # --- データベース接続情報 ---
 DB_HOST = "timecard-db-postgres.cluster-chws42kecqe9.ap-southeast-2.rds.amazonaws.com"
@@ -15,40 +12,21 @@ DB_NAME = "postgres"
 DB_USER = "postgresadmin"
 DB_PASS = "nifmon-veQhe1-vevzaz" # あなたが設定したパスワード
 
-
 def get_db_connection():
-    """データベースへの接続を確立する関数"""
-    conn = psycopg2.connect(host=DB_HOST,
-                            database=DB_NAME,
-                            user=DB_USER,
-                            password=DB_PASS,
-                            sslmode='require',
-                            cursor_factory=psycopg2.extras.DictCursor)
+    conn = psycopg2.connect(host=DB_HOST, database=DB_NAME, user=DB_USER, password=DB_PASS, sslmode='require', cursor_factory=psycopg2.extras.DictCursor)
     return conn
 
-
-# --- ルート設定 (各ページの表示) ---
-
+# --- ルート設定 ---
 @app.route('/')
-def index():
-    return render_template('admin.html')
-
+def index(): return render_template('admin.html')
 @app.route('/qr/<string:student_id>')
-def generate_qr(student_id):
-    return render_template('generate_qr.html', student_id=student_id)
-
+def generate_qr(student_id): return render_template('generate_qr.html', student_id=student_id)
 @app.route('/scan')
-def scan():
-    return render_template('scan.html')
-
+def scan(): return render_template('scan.html')
 @app.route('/admin')
-def admin():
-    return render_template('admin.html')
+def admin(): return render_template('admin.html')
 
-
-# --- API設定 (データのやり取り) ---
-
-# 授業名の一覧を返すAPI
+# --- API設定 ---
 @app.route('/api/class_names')
 def get_class_names():
     conn = None
@@ -65,7 +43,6 @@ def get_class_names():
     finally:
         if conn: conn.close()
 
-# 指定された授業名の詳細な出席データを返すAPI
 @app.route('/api/attendance/<string:class_name>')
 def get_attendance_by_class(class_name):
     records = []
@@ -75,8 +52,7 @@ def get_attendance_by_class(class_name):
         cur = conn.cursor()
         sql = """
             SELECT
-                m.id,
-                m.name,
+                m.id, m.name,
                 (SELECT status FROM attendance_records
                  WHERE student_id = m.id AND attendance_date = CURRENT_DATE
                  AND class_id IN (SELECT class_id FROM timetable WHERE class_name = %s)
@@ -88,14 +64,11 @@ def get_attendance_by_class(class_name):
                     (SELECT COUNT(*) FROM attendance_records
                      WHERE student_id = m.id AND status IN ('出席', '遅刻')
                      AND class_id IN (SELECT class_id FROM timetable WHERE class_name = %s))
-                    * 100.0
-                    /
+                    * 100.0 /
                     (SELECT COUNT(*) FROM timetable WHERE class_name = %s)
                 ) AS attendance_rate
-            FROM
-                student_master m
-            ORDER BY
-                m.id;
+            FROM student_master m
+            ORDER BY m.id;
         """
         cur.execute(sql, (class_name, class_name, class_name, class_name))
         records = [dict(row) for row in cur.fetchall()]
@@ -106,7 +79,6 @@ def get_attendance_by_class(class_name):
         if conn: conn.close()
     return jsonify(records)
 
-# 出席を記録するためのAPI
 @app.route('/api/check_in', methods=['POST'])
 def check_in():
     data = request.get_json()
@@ -148,6 +120,5 @@ def check_in():
     finally:
         if conn: conn.close()
 
-# このファイルが直接実行された場合にのみ、サーバーを起動する
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5001, debug=True)

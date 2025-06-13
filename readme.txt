@@ -2,10 +2,10 @@
 source venv/bin/activate
 
 //サーバーの起動
-flask --app app --debug run --host=0.0.0.0 --port=5001
+python3 app.py
 
-//# QRコード生成ページ 
-(http://127.0.0.1:5001/qr) 
+//ngrokの起動
+./ngrok http 5001
 
 # 管理画ページ
 （http://127.0.0.1:5001/admin）
