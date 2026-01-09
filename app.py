@@ -101,6 +101,10 @@ def scan():
 def admin():
     return render_template('admin.html')
 
+@app.route('/admin/dashboard')
+def admin_dashboard():
+    return render_template('admin_dashboard.html')
+
 # --- API設定 ---
 
 @app.route('/api/class_names')
