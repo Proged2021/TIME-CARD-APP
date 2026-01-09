@@ -53,9 +53,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (processedCodes.has(decodedText)) {
-            scanResultEl.innerHTML = `<span class="badge bg-info fs-5">処理済みです</span>`;
+            scanResultEl.innerHTML = `<span class="badge bg-info fs-5">スキャン済みです</span>`;
         } else {
-            // --- ここからが新しいロジック ---
             // サーバーからの応答を 'await' で待つ
             const serverResponse = await recordAttendance(decodedText);
 
